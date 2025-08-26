@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: translatio
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+#  cms:
+#    build:
+#      context: .
+#      dockerfile: server/Dockerfile
+#    environment:
+#      DATABASE_URL: jdbc:postgresql://db:5432/translatio
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      ADMIN_USER: admin
+#      ADMIN_PASS: admin123
+#      PUBLIC_URL: http://localhost
+#      API_ONLY: "true"
+#    depends_on:
+#      - db
+#    ports:
+#      - "8080:8080"
+#  web:
+#    image: nginx:1.27-alpine
+#    depends_on:
+#      - cms
+#      - web-builder
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+#      - web_dist:/usr/share/nginx/html:ro
+#  web-builder:
+#    image: gradle:8.10.2-jdk17
+#    working_dir: /app
+#    volumes:
+#      - ./:/app
+#      - web_dist:/app/composeApp/build/dist/wasmJs/productionExecutable
+#    command: sh -c "gradle :composeApp:wasmJsBrowserProductionWebpack --no-daemon"
+#    depends_on:
+#      - cms
+volumes:
+  db_data:
+  web_dist:
